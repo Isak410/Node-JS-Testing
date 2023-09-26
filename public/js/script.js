@@ -10,15 +10,20 @@ const AlderFelt = document.querySelector('#Input3')
 const HaarfargeFelt = document.querySelector('#Input4')
 const HobbyFelt = document.querySelector('#Input5')
 
+const deleteDiv = document.querySelector('#deleteDiv')
+const deleteKnapp = document.querySelector('#deleteKnapp')
+const deleteField = document.querySelector('#deleteField')
+
+const resField = document.getElementById('res')
+
 var bool = false
 
 var arr1 = []
 var finalArray = []
 
 function defineDataToInsert() {
-  for (let i = 1; i < 5; i++) {
-    if (document.getElementById('Input'+i).value.length == 0) {
-      console.log("glaighjlak")
+  for (let i = 1; i < 6; i++) {
+    if (document.getElementById('Input'+i).value == '') {
       bool = true
     }
   }
@@ -39,8 +44,8 @@ function defineDataToInsert() {
   return dataObj;
   
 } else {
-  var ret = {}
-  return ret
+  var dataObj = {}
+  return dataObj;
 }
 }
 
@@ -60,7 +65,8 @@ function sendQuery() {
 function insertQuery() {
 
   const dataToInsert = defineDataToInsert()
-  if (dataToInsert != {}) {
+  var length1 = Object.keys(dataToInsert).length
+  if (!length1 == 0) {
   console.log("Inserting data...");
   fetch('/run-insert-script', {
     method: 'POST',
@@ -69,14 +75,43 @@ function insertQuery() {
     },
     body: JSON.stringify(dataToInsert), // Send the data to insert in the request body
   })
-    .then(response => response.json())
+    .then(response => {
+      response.json()
+      console.log("Data inserted successfully")
+      resField.innerHTML = "Data inserted successfully"
+    })
     .then(data => {
       console.log(data.message)
     })
     .catch(error => {
-      console.log('Error: ' + error);
+      //console.log('Error: ' + error);
     });
+} else {
+  console.log("nothing in value fields")
+  bool = false
 };
+}
+
+function deleteFunc() {
+  if (!deleteField.value == '') {
+    var deleteInt = {"int":""}
+  deleteInt.int = deleteField.value
+  console.log(deleteInt)
+  fetch('/run-delete-script', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(deleteInt), // Send the data to insert in the request body
+  })
+  .then(response => {
+    response.json()
+    console.log("Successfully deleted row with specific id")
+  })
+  } else {
+    console.log("Delete Field Empty")
+  }
+  
 }
 
 
@@ -107,3 +142,4 @@ function displayResult(parsedData) {
 
 executeKnapp.addEventListener('click', sendQuery)
 insertKnapp.addEventListener('click', insertQuery)
+deleteKnapp.addEventListener('click', deleteFunc)

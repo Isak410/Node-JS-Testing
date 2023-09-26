@@ -1,9 +1,3 @@
-var dataObj = {
-    "Fornavn":""
-}
-
-var str = "heisann"
-
-dataObj.Fornavn = str
-
-console.log(dataObj)
+const deleteInt = {"int":""}
+  deleteInt.int = 2
+  console.log(JSON.stringify(deleteInt))

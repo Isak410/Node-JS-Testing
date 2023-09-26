@@ -11,6 +11,8 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+
+
 app.get('/run-script', (req, res) => {
     myScript
     .sqlQuery()
@@ -25,8 +27,38 @@ app.get('/run-script', (req, res) => {
   });
 
   app.use(express.json())
+  
+  app.post('/run-delete-script', (req, res) => {
+  const { int } = req.body
+  console.log(int)
+  var config = {
+    server: "DESKTOP-N9GI0V9\\SQLEXPRESS",
+    database: "fdb",
+    driver: "msnodesqlv8",
+    options: {
+      trustedConnection: true,
+    },
+  };
+  sql.connect(config, function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      var request = new sql.Request();
+      request.query("DELETE FROM brukere Where ID = "+int+""), function (err, result) {
+        if (err) {
+          console.log(err)
+          reject(err)
+        } else {
+          response.json("Successfully deleted")
+          resolve("Successfully deleted row with specific id")
+        }
+      }
+    }
+  })
+  response.json("Yap Yap")
+})
 
-  app.post('/run-insert-script', (req, res) => {
+  app.post('/run-insert-script', (req, response) => {
     console.log("Received POST request to insert data...");
     console.log(req.body)
     const { Fornavn, Etternavn, Alder, Haarfarge, Hobby} = req.body;
@@ -44,7 +76,7 @@ app.get('/run-script', (req, res) => {
     sql.connect(config, function (err) {
       if (err) {
         console.log(err);
-        res.status(500).json({ error: 'Error connecting to the database' });
+        response.status(500).json({ error: 'Error connecting to the database' });
       } else {
         var request = new sql.Request();
         request.query("INSERT INTO brukere (Fornavn, Etternavn, Alder, Haarfarge, Hobby) VALUES ( '"+Fornavn+"', '"+Etternavn+"', '"+Alder+"', '"+Haarfarge+"', '"+Hobby+"')"), function (err, result) {
@@ -52,13 +84,13 @@ app.get('/run-script', (req, res) => {
             console.log(err);
             reject(err); // Reject the promise if there's an error
           } else {
-            res.json("successful insertion")
-            console.log("Inserted data into 'brukere' table.");
+            response.json("successful insertion")
             resolve("Data inserted successfully."); // Resolve the promise with the JSON data
           }
         };
       }
     });
+    response.json("Successful Insertion")
   });
 
 // Serve static files from the "public" directory
