@@ -1,17 +1,17 @@
 const sql = require("mssql/msnodesqlv8");
 
+var config = {
+  server: "DESKTOP-N9GI0V9\\SQLEXPRESS",
+  database: "fdb",
+  driver: "msnodesqlv8",
+  options: {
+    trustedConnection: true,
+  },
+};
+
 function sqlQuery() {
   return new Promise((resolve, reject) => {
     console.log("Running");
-
-    var config = {
-      server: "DESKTOP-N9GI0V9\\SQLEXPRESS",
-      database: "fdb",
-      driver: "msnodesqlv8",
-      options: {
-        trustedConnection: true,
-      },
-    };
 
     sql.connect(config, function (err) {
       if (err) {
@@ -39,15 +39,6 @@ function sqlInsert(dataToInsert) {
   console.log(dataToInsert)
   return new Promise((resolve, reject) => {
     console.log("Running");
-
-    var config = {
-      server: "DESKTOP-N9GI0V9\\SQLEXPRESS",
-      database: "fdb",
-      driver: "msnodesqlv8",
-      options: {
-        trustedConnection: true,
-      },
-    };
 
     sql.connect(config, function (err) {
       if (err) {
