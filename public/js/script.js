@@ -16,7 +16,10 @@ const deleteField = document.querySelector('#deleteField')
 
 const resField = document.getElementById('res')
 
+var mainTable = document.getElementById('mainTable')
+
 var bool = false
+var bool1 = false
 
 var arr1 = []
 var finalArray = []
@@ -55,7 +58,7 @@ function sendQuery() {
     .then(response => response.json())
     .then(data => {
       const parsedData = JSON.parse(data)
-      displayResult(parsedData)
+      if(valueFelt.value == 0) {makeTable(parsedData);} else {displayResult(parsedData)}
     })
     .catch(error => {
       console.log('Error: ' + error);
@@ -116,17 +119,12 @@ function deleteFunc() {
 
 
 function displayResult(parsedData) {
+  console.log("displayresults func called")
   if (valueFelt.value < ((Object.values(parsedData)).length + 1) && valueFelt.value > 0) {
     var arr = Object.values(parsedData)
     for (let value of Object.values(arr[valueFelt.value-1])) {arr1.push(value)}
     resultElement.innerHTML = arr1
     arr1 = []
-  } else if (valueFelt.value == 0) {
-    var arr = Object.values(parsedData)
-    for (let o = 0; o < parsedData.length; o++) {
-    finalArray[o] = []
-    for (let value of Object.values(arr[o])) {finalArray[o].push(value)}
-    console.log(finalArray)
   }
   for (let i = 0; i < finalArray.length; i++) {
     for (let t = 0; t < finalArray[i].length; t++) {
@@ -136,8 +134,27 @@ function displayResult(parsedData) {
       container.appendChild(document.createTextNode("-----------------------"))
       container.appendChild(document.createElement("br"))
     }
-  } else {resultElement.innerHTML = "This object does not exist"}
+}
 
+function makeTable(parsedData) {
+  mainTable.innerHTML = ""
+  var arr = Object.values(parsedData)
+    for (let o = 0; o < parsedData.length; o++) {
+    finalArray[o] = []
+    for (let value of Object.values(arr[o])) {finalArray[o].push(value)}
+    console.log(finalArray)
+  }
+  for (let i = 0; i < finalArray.length; i++) {
+    var row = (document.createElement('tr'))
+    row.id = ("tr" + i)
+    mainTable.appendChild(row)
+    for (let t = 0; t < finalArray[i].length; t++) {
+      var td = document.createElement("td")
+      td.className = "td"+t
+      td.textContent = finalArray[i][t]
+      document.getElementById("tr"+i).appendChild(td)
+    }
+  }
 }
 
 executeKnapp.addEventListener('click', sendQuery)

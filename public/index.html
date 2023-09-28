@@ -8,14 +8,23 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <div id="container">
     <button id="executeQuery">knapp</button>
     <input type="number" id="valueinput" value="0">
     <p id="queryResults"></p>
-    <div id="container">
-
+    <p id="res"></p>
     </div>
-    
+
+    <div id="deleteDiv">
+        <button id="deleteKnapp">Delete</button>
+        <input type="number" id="deleteField" placeholder=" Id of user...">
+    </div>
+
     <br>
+
+    <table id="mainTable"> </table>
+
+    <div id="around">
     <div id="insertdiv">
         <input type="text" placeholder="Fornavn..." id="Input1">    
         <input type="text" placeholder="Etternavn..." id="Input2">
@@ -24,12 +33,9 @@
         <input type="text" placeholder="Hobby..." id="Input5">
         <button id="insertKnapp">Insert</button>
     </div>
-    <p id="res"></p>
-
-    <div id="deleteDiv">
-        <button id="deleteKnapp">Delete</button>
-        <input type="number" id="deleteField" placeholder=" Id of user...">
     </div>
+    
+
     <script src="js/script.js"></script>
 </body>
 </html>

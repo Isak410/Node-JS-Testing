@@ -4,19 +4,48 @@ h1 {
 
 body {
     background-color: rgb(72, 72, 72);
+    margin: 0%;
 }
 
-input {
-    border-radius: 10px;
+
+#around {
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 #insertdiv {
+    z-index: 1;
+    margin: auto;
+    position: absolute;
+    background-color: black;
+    border: solid 1px;
+    border-radius: 3px;
     width: 200px;
     display: flex;
     flex-direction: column;
+    opacity: 100%;
+}
+
+#deleteDiv {
+    opacity: 100%;
+    z-index: 1;
+}
+
+#deleteDiv > * {
+    z-index: 1;
 }
 
 #insertKnapp {
     width: 200px;
-    border-radius: 10px;
+    
 }
+
+th, td {
+    border: solid;
+    border-spacing: 0px;
+  }

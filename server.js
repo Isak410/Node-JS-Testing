@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/run-script', (req, res) => {
+  
     myScript
     .sqlQuery()
     .then(result => {
