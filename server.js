@@ -3,14 +3,12 @@ const { sqlQuery } = require('./public/js');
 const app = express();
 const port = process.env.PORT || 8080; // Use the specified PORT or default to 3000
 const sql = require("mssql/msnodesqlv8");
-
 const myScript = require('./public/js/index')
 
 // Define a route to serve your HTML file
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
-
 
 
 app.get('/run-script', (req, res) => {

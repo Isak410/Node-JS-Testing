@@ -8,22 +8,22 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+<div id="alt">
     <div id="container">
     <button id="executeQuery">knapp</button>
     <input type="number" id="valueinput" value="0">
     <p id="queryResults"></p>
     <p id="res"></p>
     </div>
-
     <div id="deleteDiv">
         <button id="deleteKnapp">Delete</button>
         <input type="number" id="deleteField" placeholder=" Id of user...">
     </div>
-
     <br>
-
     <table id="mainTable"> </table>
 
+    <button id="viewInsert">Insert new row</button>
+</div>
     <div id="around">
     <div id="insertdiv">
         <input type="text" placeholder="Fornavn..." id="Input1">    
@@ -32,10 +32,9 @@
         <input type="text" placeholder="Hårfarge..." id="Input4">
         <input type="text" placeholder="Hobby..." id="Input5">
         <button id="insertKnapp">Insert</button>
+        <button id="avbrytKnapp">Cancel</button>
     </div>
-    </div>
-    
-
+</div>
     <script src="js/script.js"></script>
 </body>
 </html>

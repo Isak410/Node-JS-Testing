@@ -14,6 +14,9 @@ const deleteDiv = document.querySelector('#deleteDiv')
 const deleteKnapp = document.querySelector('#deleteKnapp')
 const deleteField = document.querySelector('#deleteField')
 
+const viewInsert = document.querySelector('#viewInsert')
+const avbrytKnapp = document.querySelector('#avbrytKnapp')
+
 const resField = document.getElementById('res')
 
 var mainTable = document.getElementById('mainTable')
@@ -23,6 +26,8 @@ var bool1 = false
 
 var arr1 = []
 var finalArray = []
+
+var titleContents = ["", "Navn", "Etternavn", "Alder", "Hårfarge", "Hobby"]
 
 function defineDataToInsert() {
   for (let i = 1; i < 6; i++) {
@@ -66,7 +71,6 @@ function sendQuery() {
 };
 
 function insertQuery() {
-
   const dataToInsert = defineDataToInsert()
   var length1 = Object.keys(dataToInsert).length
   if (!length1 == 0) {
@@ -93,6 +97,7 @@ function insertQuery() {
   console.log("nothing in value fields")
   bool = false
 };
+avbrytFunc()
 }
 
 function deleteFunc() {
@@ -117,7 +122,6 @@ function deleteFunc() {
   
 }
 
-
 function displayResult(parsedData) {
   console.log("displayresults func called")
   if (valueFelt.value < ((Object.values(parsedData)).length + 1) && valueFelt.value > 0) {
@@ -138,14 +142,26 @@ function displayResult(parsedData) {
 
 function makeTable(parsedData) {
   mainTable.innerHTML = ""
+  
   var arr = Object.values(parsedData)
     for (let o = 0; o < parsedData.length; o++) {
     finalArray[o] = []
     for (let value of Object.values(arr[o])) {finalArray[o].push(value)}
     console.log(finalArray)
   }
+
+  var titlerow = (document.createElement("tr"))
+  titlerow.id = "titlerow" 
+  mainTable.appendChild(titlerow)
+  for (let k = 0; k < finalArray[0].length; k++) {
+    var titletd = (document.createElement("td"))
+    titletd.className = "titletd"
+    titletd.textContent = (titleContents[k])
+    titlerow.appendChild(titletd)
+  }
+ 
   for (let i = 0; i < finalArray.length; i++) {
-    var row = (document.createElement('tr'))
+    var row = (document.createElement("tr"))
     row.id = ("tr" + i)
     mainTable.appendChild(row)
     for (let t = 0; t < finalArray[i].length; t++) {
@@ -157,6 +173,28 @@ function makeTable(parsedData) {
   }
 }
 
+const insertDiv = document.querySelector('#insertdiv')
+const alt = document.querySelector('#alt')
+
+function viewInsertFunc() {
+  alt.style.opacity = "25%"
+  alt.style.pointerEvents = "none"
+  insertDiv.style.opacity = "100%"
+  insertDiv.style.pointerEvents = "all"
+}
+
+function avbrytFunc() {
+  alt.style.opacity = "100%"
+  alt.style.pointerEvents = "all"
+  insertDiv.style.opacity = "0%"
+  insertDiv.style.pointerEvents = "none"
+  for (let i = 1; i < 6; i++) {
+    document.getElementById('Input'+i).value = ''
+  }
+}
+
 executeKnapp.addEventListener('click', sendQuery)
 insertKnapp.addEventListener('click', insertQuery)
 deleteKnapp.addEventListener('click', deleteFunc)
+viewInsert.addEventListener('click', viewInsertFunc)
+avbrytKnapp.addEventListener('click', avbrytFunc)
