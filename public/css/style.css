@@ -6,11 +6,25 @@ body {
     background-color: rgb(72, 72, 72);
     margin: 0%;
     height:100%;
-    width:100%
+    width:100%;
+    display: flex;
+    justify-content: center;
+    
 }
 
 table {
     border-collapse: collapse;
+}
+
+tr {
+    background-color: white;
+}
+
+.tdknapp {
+    height: 20px;
+    width: 20px;
+    background-image: url(../Assets/deleteicon.jpg);
+    background-size: cover;
 }
 
 #around {
@@ -20,6 +34,7 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
 }
 
 #avbrytKnapp {
@@ -30,6 +45,15 @@ table {
 #insertKnapp {
     color: rgb(1, 165, 1);
     font: bold;
+}
+
+#viewInsert {
+    width: 100%;
+    border-radius: 1px;
+}
+
+#titletd6 {
+    text-align: center;
 }
 
 #insertdiv {

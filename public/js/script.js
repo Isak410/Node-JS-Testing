@@ -27,7 +27,7 @@ var bool1 = false
 var arr1 = []
 var finalArray = []
 
-var titleContents = ["", "Navn", "Etternavn", "Alder", "Hårfarge", "Hobby"]
+var titleContents = ["ID", "Navn", "Etternavn", "Alder", "Hårfarge", "Hobby", "X"]
 
 function defineDataToInsert() {
   for (let i = 1; i < 6; i++) {
@@ -66,6 +66,7 @@ function sendQuery() {
       if(valueFelt.value == 0) {makeTable(parsedData);} else {displayResult(parsedData)}
     })
     .catch(error => {
+      resField.innerHTML = "no objects stored"
       console.log('Error: ' + error);
     });
 };
@@ -84,8 +85,8 @@ function insertQuery() {
   })
     .then(response => {
       response.json()
-      console.log("Data inserted successfully")
       resField.innerHTML = "Data inserted successfully"
+      
     })
     .then(data => {
       console.log(data.message)
@@ -100,10 +101,9 @@ function insertQuery() {
 avbrytFunc()
 }
 
-function deleteFunc() {
-  if (!deleteField.value == '') {
+function deleteFunc(delid) {
     var deleteInt = {"int":""}
-  deleteInt.int = deleteField.value
+  deleteInt.int = delid
   console.log(deleteInt)
   fetch('/run-delete-script', {
     method: 'POST',
@@ -115,11 +115,10 @@ function deleteFunc() {
   .then(response => {
     response.json()
     console.log("Successfully deleted row with specific id")
+    
   })
-  } else {
-    console.log("Delete Field Empty")
-  }
-  
+  mainTable.innerHTML = ""
+  setTimeout(() => sendQuery(), 2000)
 }
 
 function displayResult(parsedData) {
@@ -153,9 +152,10 @@ function makeTable(parsedData) {
   var titlerow = (document.createElement("tr"))
   titlerow.id = "titlerow" 
   mainTable.appendChild(titlerow)
-  for (let k = 0; k < finalArray[0].length; k++) {
+  for (let k = 0; k < finalArray[0].length+1; k++) {
     var titletd = (document.createElement("td"))
     titletd.className = "titletd"
+    titletd.id = "titletd"+k
     titletd.textContent = (titleContents[k])
     titlerow.appendChild(titletd)
   }
@@ -170,6 +170,19 @@ function makeTable(parsedData) {
       td.textContent = finalArray[i][t]
       document.getElementById("tr"+i).appendChild(td)
     }
+
+    var tdbut = document.createElement("td")
+    var knapp = document.createElement("button")
+    knapp.id = ("tdknapp"+i)
+    knapp.className = "tdknapp"
+    var delid = finalArray[i][0]
+    knapp.addEventListener('click', (function(id) {
+      return function() {
+        deleteFunc(id);
+      };
+    })(delid));
+    document.getElementById("tr"+i).appendChild(tdbut)
+    tdbut.appendChild(knapp)
   }
 }
 

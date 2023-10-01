@@ -54,7 +54,7 @@ app.get('/run-script', (req, res) => {
       }
     }
   })
-  response.json("Yap Yap")
+  //response.json("Yap Yap")
 })
 
   app.post('/run-insert-script', (req, response) => {
